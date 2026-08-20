@@ -1057,6 +1057,19 @@
     navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
     window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMobileNav(); });
 
+    /* ── ANCHOR SCROLL WITHOUT URL HASH ── */
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const id = link.getAttribute('href').slice(1);
+        const target = id ? document.getElementById(id) : null;
+        e.preventDefault();
+        const top = target
+          ? target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight - 20
+          : 0;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
     /* ── FAQ ACCORDION ── */
     const faqData = [
       { q: "Can multiple areas of the body be operated on in a single surgery?", a: "Yes, and combining areas often lowers the overall cost by sharing operating room and medical staff fees. The number of procedures depends on a prior evaluation, as the doctor needs to assess the patient's skin, fat, and overall condition for safety." },
